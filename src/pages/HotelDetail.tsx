@@ -2,7 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Wifi, Waves, Coffee, Car, CheckCircle, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useHotel } from "@/hooks/useHotel";
 import { useWeb3 } from "@/hooks/useWeb3";
 import { useState } from "react";
@@ -13,7 +13,8 @@ import hotelImage from "@/assets/hotel-1.jpg";
 import heroImage from "@/assets/hero-hotel.jpg";
 
 const HotelDetail = () => {
-  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('id');
   const navigate = useNavigate();
   const { provider, isConnected } = useWeb3();
   const { hotel, loading, error } = useHotel(id ? parseInt(id) : null);
