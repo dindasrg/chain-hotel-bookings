@@ -9,8 +9,8 @@ export const LISK_SEPOLIA = {
 
 // Contract addresses - Update these with deployed contract addresses
 export const CONTRACTS = {
-  INNCHAIN: process.env.NEXT_PUBLIC_INNCHAIN_CONTRACT || "0x...", // Update with actual address
-  USDC: process.env.NEXT_PUBLIC_USDC_TOKEN || "0x...", // Update with USDC address on Lisk Sepolia
+  INNCHAIN: import.meta.env.VITE_INNCHAIN_CONTRACT || "0x...", // Update with actual address
+  USDC: import.meta.env.VITE_USDC_TOKEN || "0x...", // Update with USDC address on Lisk Sepolia
 };
 
 // Contract ABIs

@@ -40,11 +40,13 @@ Create a `.env` file in the root:
 
 ```env
 # InnChain Contract Address (Lisk Sepolia)
-NEXT_PUBLIC_INNCHAIN_CONTRACT=0x...
+VITE_INNCHAIN_CONTRACT=0x...
 
 # USDC Token Address (Lisk Sepolia)
-NEXT_PUBLIC_USDC_TOKEN=0x...
+VITE_USDC_TOKEN=0x...
 ```
+
+**Note**: Vite requires environment variables to be prefixed with `VITE_` to be exposed to the browser.
 
 ### 2. Install Dependencies
 Already installed:
