@@ -28,23 +28,6 @@ const HotelStaffCheckin = () => {
   const [loading, setLoading] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<any>(null);
 
-  // Mock bookings - will be replaced with contract data
-  const mockBookings = [
-    {
-      id: "BK-001234",
-      customer: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
-      roomType: "Deluxe Suite",
-      checkIn: "2025-12-01",
-      checkOut: "2025-12-05",
-      nights: 4,
-      roomCost: 400,
-      deposit: 100,
-      total: 500,
-      status: "pending",
-      createdAt: "2025-11-20T10:30:00Z",
-    },
-  ];
-
   const handleSearchBooking = async () => {
     if (!provider || !isConnected) {
       toast.error("Please connect your wallet");
