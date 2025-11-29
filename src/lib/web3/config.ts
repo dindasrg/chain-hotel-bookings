@@ -15,46 +15,13 @@ export const PANNA_CONFIG = {
 
 // Contract addresses - Update these with deployed contract addresses
 export const CONTRACTS = {
-  INNCHAIN: import.meta.env.VITE_INNCHAIN_CONTRACT || "0x5C6587367AE3BfcF45c6e196aEC1e72783Dd995E",
+  INNCHAIN: import.meta.env.VITE_INNCHAIN_CONTRACT || "0xb253EE84b6f937f0B4Ebfbef5F32E0606815c17f",
   USDC: import.meta.env.VITE_USDC_TOKEN || "0xD4fa9D0A762e1c94E6FbBb8f0Eeb090597147603",
 };
 
-// Contract ABIs
-export const INNCHAIN_ABI = [
-  // Hotel Management
-  "function registerHotel(string memory name, address payable wallet) external returns (uint256)",
-  "function linkHotelToClass(uint256 hotelId, uint256 classId) external",
-  "function addGlobalRoomClass(string memory name, uint256 pricePerNight) external returns (uint256)",
-
-  // Booking Functions
-  "function createBooking(uint256 hotelId, uint256 classId, uint256 nights, uint256 depositAmount) external returns (uint256)",
-  "function confirmCheckIn(uint256 bookingId) external",
-  "function refundDeposit(uint256 bookingId) external",
-  "function chargeDeposit(uint256 bookingId, uint256 amount) external",
-  "function fullRefund(uint256 bookingId) external",
-
-  // View Functions
-  "function getHotel(uint256 hotelId) external view returns (bool registered, string name, address wallet, uint256 classCount)",
-  "function getAllHotelsWithDetails() external view returns (tuple(uint256 id, string name, address wallet, uint256 classCount, tuple(uint256 id, string name, uint256 pricePerNight)[] classes)[])",
-  "function getAllRoomClasses() external view returns (uint256[] ids, string[] names, uint256[] prices)",
-  "function getHotelClasses(uint256 hotelId) external view returns (uint256[])",
-  "function getBooking(uint256 bookingId) external view returns (address customer, uint256 hotelId, uint256 classId, uint256 nights, uint256 roomCost, uint256 depositAmount, bool paidRoom, bool roomReleased, bool depositReleased)",
-
-  // Counters
-  "function hotelCount() external view returns (uint256)",
-  "function bookingCount() external view returns (uint256)",
-  "function roomClassCount() external view returns (uint256)",
-
-  // Events
-  "event HotelRegistered(uint256 indexed hotelId, string name, address wallet)",
-  "event HotelClassLinked(uint256 indexed hotelId, uint256 indexed classId)",
-  "event RoomClassCreated(uint256 indexed classId, string name, uint256 pricePerNight)",
-  "event BookingCreated(uint256 indexed bookingId, uint256 indexed hotelId, uint256 indexed classId, address customer, uint256 roomCost, uint256 depositAmount)",
-  "event RoomPaymentReleased(uint256 indexed bookingId, uint256 amountToHotel)",
-  "event DepositRefunded(uint256 indexed bookingId, uint256 amountToCustomer)",
-  "event DepositCharged(uint256 indexed bookingId, uint256 amountToHotel, uint256 amountToCustomer)",
-  "event FullRefund(uint256 indexed bookingId, uint256 totalRefund)",
-];
+// Contract ABIs - Using official ABI from smart contract
+import InnChainArtifact from './InnChain.json';
+export const INNCHAIN_ABI = InnChainArtifact.abi;
 
 export const ERC20_ABI = [
   "function approve(address spender, uint256 amount) external returns (bool)",
