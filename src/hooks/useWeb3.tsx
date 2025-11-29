@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { BrowserProvider, Contract, formatUnits, parseUnits } from "ethers";
-import { LISK_SEPOLIA, CONTRACTS, INNCHAIN_ABI, ERC20_ABI } from "@/lib/web3/config";
+import { BrowserProvider, Contract } from "ethers";
+import PannaConnect from "panna-sdk";
+import { LISK_SEPOLIA, CONTRACTS, INNCHAIN_ABI, ERC20_ABI, PANNA_CONFIG } from "@/lib/web3/config";
 
 interface Web3ContextType {
   account: string | null;
@@ -18,17 +19,26 @@ const Web3Context = createContext<Web3ContextType | undefined>(undefined);
 export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [account, setAccount] = useState<string | null>(null);
   const [provider, setProvider] = useState<BrowserProvider | null>(null);
+  const [pannaConnect, setPannaConnect] = useState<any>(null);
+
+  // Initialize Panna SDK
+  useEffect(() => {
+    const panna = new (PannaConnect as any)(
+      PANNA_CONFIG.clientId,
+      PANNA_CONFIG.partnerId
+    );
+    setPannaConnect(panna);
+  }, []);
 
   const checkConnection = async () => {
-    if (typeof window !== "undefined" && window.ethereum) {
+    if (pannaConnect) {
       try {
-        const browserProvider = new BrowserProvider(window.ethereum);
-        const accounts = await browserProvider.listAccounts();
-        
-        if (accounts.length > 0) {
+        const signer = await pannaConnect.getSigner();
+        if (signer) {
+          const address = await signer.getAddress();
+          setAccount(address);
+          const browserProvider = new BrowserProvider(window.ethereum);
           setProvider(browserProvider);
-          const signer = await browserProvider.getSigner();
-          setAccount(await signer.getAddress());
         }
       } catch (error) {
         console.error("Failed to check connection:", error);
@@ -37,19 +47,22 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   };
 
   const connect = async () => {
-    if (typeof window === "undefined" || !window.ethereum) {
-      alert("Please install MetaMask or another Web3 wallet");
+    if (!pannaConnect) {
+      alert("Panna SDK is not initialized");
       return;
     }
 
     try {
-      const browserProvider = new BrowserProvider(window.ethereum);
-      await browserProvider.send("eth_requestAccounts", []);
-      const signer = await browserProvider.getSigner();
+      // Call Panna login - this handles wallet connection
+      await pannaConnect.login();
+      
+      // Get signer from Panna
+      const signer = await pannaConnect.getSigner();
       const address = await signer.getAddress();
 
-      setProvider(browserProvider);
       setAccount(address);
+      const browserProvider = new BrowserProvider(window.ethereum);
+      setProvider(browserProvider);
 
       // Switch to Lisk Sepolia
       await switchToLiskSepolia();
@@ -113,7 +126,9 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    checkConnection();
+    if (pannaConnect) {
+      checkConnection();
+    }
 
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts: string[]) => {
@@ -135,7 +150,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         window.ethereum.removeListener("chainChanged", () => {});
       }
     };
-  }, []);
+  }, [pannaConnect]);
 
   return (
     <Web3Context.Provider

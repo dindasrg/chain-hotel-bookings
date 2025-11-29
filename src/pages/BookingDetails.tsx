@@ -69,25 +69,25 @@ const BookingDetails = () => {
             </Badge>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid lg:grid-cols-3 gap-6">
             {/* Main Content */}
-            <div className="md:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-6">
               {/* Hotel Info */}
               <Card className="overflow-hidden">
-                <div className="aspect-video bg-muted relative">
+                <div className="aspect-[16/9] bg-muted relative">
                   <img 
                     src={booking.hotel.image} 
                     alt={booking.hotel.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle className="text-2xl">{booking.hotel.name}</CardTitle>
+                <CardContent className="pt-6">
+                  <h2 className="text-2xl font-bold mb-2">{booking.hotel.name}</h2>
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <MapPin className="w-4 h-4" />
                     <span>{booking.hotel.address}</span>
                   </div>
-                </CardHeader>
+                </CardContent>
               </Card>
 
               {/* Booking Details */}
@@ -96,44 +96,46 @@ const BookingDetails = () => {
                   <CardTitle>Stay Information</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="flex items-start gap-3">
-                      <Calendar className="w-5 h-5 text-primary mt-1" />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                      <Calendar className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="font-semibold">Check-in</p>
-                        <p className="text-muted-foreground">{booking.dates.checkIn}</p>
+                        <p className="text-sm font-semibold mb-0.5">Check-in</p>
+                        <p className="text-sm text-muted-foreground">{booking.dates.checkIn}</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3">
-                      <Calendar className="w-5 h-5 text-primary mt-1" />
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                      <Calendar className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="font-semibold">Check-out</p>
-                        <p className="text-muted-foreground">{booking.dates.checkOut}</p>
+                        <p className="text-sm font-semibold mb-0.5">Check-out</p>
+                        <p className="text-sm text-muted-foreground">{booking.dates.checkOut}</p>
                       </div>
                     </div>
                   </div>
                   
                   <Separator />
                   
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Clock className="w-5 h-5 text-primary" />
-                      <span className="font-semibold">Duration</span>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between py-2">
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="font-semibold">Duration</span>
+                      </div>
+                      <span className="text-muted-foreground">{booking.dates.nights} nights</span>
                     </div>
-                    <span className="text-muted-foreground">{booking.dates.nights} nights</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Users className="w-5 h-5 text-primary" />
-                      <span className="font-semibold">Guests</span>
+                    
+                    <div className="flex items-center justify-between py-2">
+                      <div className="flex items-center gap-3">
+                        <Users className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="font-semibold">Guests</span>
+                      </div>
+                      <span className="text-muted-foreground">{booking.room.guests} guests</span>
                     </div>
-                    <span className="text-muted-foreground">{booking.room.guests} guests</span>
-                  </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold">Room Type</span>
-                    <span className="text-muted-foreground">{booking.room.type}</span>
+                    <div className="flex items-center justify-between py-2">
+                      <span className="font-semibold">Room Type</span>
+                      <span className="text-muted-foreground">{booking.room.type}</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -141,26 +143,26 @@ const BookingDetails = () => {
               {/* Escrow Status */}
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Wallet className="w-5 h-5" />
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Wallet className="w-5 h-5 flex-shrink-0" />
                     Escrow Status
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span>Payment Status</span>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-medium">Payment Status</span>
                     <Badge variant="outline" className="bg-background">
                       {booking.escrowStatus === "locked" && "🔒 Funds Secured"}
                       {booking.escrowStatus === "released" && "✓ Released to Hotel"}
                       {booking.escrowStatus === "refunded" && "↩️ Refunded"}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Your payment is securely held in the smart contract escrow. Funds will be released to the hotel upon check-in confirmation.
                   </p>
                   <Button 
                     variant="link" 
-                    className="p-0 h-auto text-primary"
+                    className="p-0 h-auto text-primary hover:text-primary/80"
                     onClick={() => window.open(`${booking.transactionHash}`, '_blank')}
                   >
                     View Transaction →
@@ -174,19 +176,19 @@ const BookingDetails = () => {
               {/* Payment Summary */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Payment Summary</CardTitle>
+                  <CardTitle className="text-lg">Payment Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center py-2">
                     <span className="text-muted-foreground">Room Cost</span>
                     <span className="font-semibold">{booking.payment.roomCost} {booking.payment.currency}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center py-2">
                     <span className="text-muted-foreground">Deposit</span>
                     <span className="font-semibold">{booking.payment.deposit} {booking.payment.currency}</span>
                   </div>
-                  <Separator />
-                  <div className="flex justify-between text-lg">
+                  <Separator className="my-3" />
+                  <div className="flex justify-between items-center text-lg pt-2">
                     <span className="font-bold">Total Paid</span>
                     <span className="font-bold text-primary">{booking.payment.total} {booking.payment.currency}</span>
                   </div>
@@ -196,38 +198,38 @@ const BookingDetails = () => {
               {/* Wallet Info */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Your Wallet</CardTitle>
+                  <CardTitle className="text-lg">Your Wallet</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">Connected Address</p>
-                    <p className="text-xs font-mono bg-muted p-2 rounded break-all">
-                      {booking.customer.wallet}
-                    </p>
+                    <p className="text-sm font-medium text-muted-foreground">Connected Address</p>
+                    <div className="bg-muted p-3 rounded-lg">
+                      <p className="text-xs font-mono break-all leading-relaxed">
+                        {booking.customer.wallet}
+                      </p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Actions */}
-              <Card>
-                <CardContent className="pt-6 space-y-3">
-                  <Button className="w-full" size="lg">
-                    Contact Hotel
+              <div className="space-y-3">
+                <Button className="w-full" size="lg">
+                  Contact Hotel
+                </Button>
+                {booking.status === "pending" && (
+                  <Button variant="outline" className="w-full" size="lg">
+                    Request Cancellation
                   </Button>
-                  {booking.status === "pending" && (
-                    <Button variant="outline" className="w-full" size="lg">
-                      Request Cancellation
-                    </Button>
-                  )}
-                  <Button 
-                    variant="ghost" 
-                    className="w-full" 
-                    onClick={() => navigate("/find-hotels")}
-                  >
-                    Back to Search
-                  </Button>
-                </CardContent>
-              </Card>
+                )}
+                <Button 
+                  variant="ghost" 
+                  className="w-full" 
+                  onClick={() => navigate("/find-hotels")}
+                >
+                  Back to Search
+                </Button>
+              </div>
             </div>
           </div>
         </motion.div>

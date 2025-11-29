@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Wallet } from "lucide-react";
+import { useWeb3 } from "@/hooks/useWeb3";
 
 export const Navigation = () => {
   const location = useLocation();
   const isDarkPage = location.pathname.includes("hotels") || location.pathname.includes("booking");
+  const { account, isConnected, connect, disconnect } = useWeb3();
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 ${isDarkPage ? 'bg-secondary/95' : 'bg-background/95'} backdrop-blur-sm border-b border-border`}>
@@ -41,15 +43,23 @@ export const Navigation = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            {isDarkPage && (
-              <Button variant="wallet" size="lg">
+            {isConnected ? (
+              <Button 
+                variant={isDarkPage ? "wallet" : "hero"} 
+                size="lg"
+                onClick={disconnect}
+              >
                 <Wallet className="w-4 h-4" />
-                Wallet
+                {account?.slice(0, 6)}...{account?.slice(-4)}
               </Button>
-            )}
-            {!isDarkPage && (
-              <Button variant="hero" size="lg">
-                Login
+            ) : (
+              <Button 
+                variant={isDarkPage ? "wallet" : "hero"} 
+                size="lg"
+                onClick={connect}
+              >
+                <Wallet className="w-4 h-4" />
+                Connect Wallet
               </Button>
             )}
           </div>
