@@ -1,15 +1,21 @@
 // Lisk Sepolia Testnet Configuration
 export const LISK_SEPOLIA = {
-  chainId: 4202,
+  chainId: import.meta.env.VITE_CHAIN_ID ? parseInt(import.meta.env.VITE_CHAIN_ID) : 4202,
   name: "Lisk Sepolia Testnet",
   currency: "ETH",
   explorerUrl: "https://sepolia-blockscout.lisk.com",
   rpcUrl: "https://rpc.sepolia-api.lisk.com",
 };
 
+// Panna SDK Configuration
+export const PANNA_CONFIG = {
+  clientId: import.meta.env.VITE_PANNA_CLIENT_ID || "7cb948c18beb24e6105880bdd3e734f0",
+  partnerId: import.meta.env.VITE_PANNA_PARTNER_ID || "ff838874-df55-4b2e-8bfc-88df08f33296",
+};
+
 // Contract addresses - Update these with deployed contract addresses
 export const CONTRACTS = {
-  INNCHAIN: import.meta.env.VITE_INNCHAIN_CONTRACT || "0x...", // Update with actual address
+  INNCHAIN: import.meta.env.VITE_INNCHAIN_CONTRACT || "0xd85610Fd3255b995b69d3B11b503C3e25f380e90",
   USDC: import.meta.env.VITE_USDC_TOKEN || "0x...", // Update with USDC address on Lisk Sepolia
 };
 

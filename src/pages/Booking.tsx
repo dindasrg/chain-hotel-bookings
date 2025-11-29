@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { CheckCircle, Wallet, Lock, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import hotelImage from "@/assets/hotel-1.jpg";
 
 const Booking = () => {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -183,7 +185,7 @@ const Booking = () => {
                           </div>
                         </div>
                       </div>
-                      <Button variant="hero" size="lg">
+                      <Button variant="hero" size="lg" onClick={() => navigate('/booking-details')}>
                         View Booking Details
                       </Button>
                     </div>
