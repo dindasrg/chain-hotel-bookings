@@ -55,7 +55,7 @@ const FindHotels = () => {
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
                   <Input
-                    value="Thu, 27 Nov 2025 - Fri, 28 Nov 2025"
+                    defaultValue="Thu, 27 Nov 2025 - Fri, 28 Nov 2025"
                     className="pl-10 bg-white/5 border-white/10 text-white"
                   />
                 </div>
@@ -67,7 +67,7 @@ const FindHotels = () => {
                   <div className="relative flex-1">
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
                     <Input
-                      value="2 Adult, 0 Child, 1 Room"
+                      defaultValue="2 Adult, 0 Child, 1 Room"
                       className="pl-10 bg-white/5 border-white/10 text-white"
                     />
                   </div>
@@ -107,11 +107,11 @@ const FindHotels = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="text-xs text-white/50 block mb-1">Min Price</label>
-                      <Input value="$60" className="bg-white/5 border-white/10 text-white" />
+                      <Input defaultValue="$60" className="bg-white/5 border-white/10 text-white" />
                     </div>
                     <div>
                       <label className="text-xs text-white/50 block mb-1">Max Price</label>
-                      <Input value="$360" className="bg-white/5 border-white/10 text-white" />
+                      <Input defaultValue="$360" className="bg-white/5 border-white/10 text-white" />
                     </div>
                   </div>
                 </div>
